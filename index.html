@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Reserva Laboratório de Informática 02</title>
+    <style>
+        /* ================= ESTILOS GLOBAIS ================= */
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        
+        /* ================= CABEÇALHO ================= */
+        .header { border-bottom: 2px solid #005f6b; padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .header-textos { text-align: left; }
+        .header-textos h2 { color: #555; font-size: 14px; margin: 0 0 5px 0; text-transform: uppercase; font-weight: bold; }
+        .header-textos h1 { color: #004080; font-size: 26px; margin: 0; }
+        .btn-login-admin { background-color: #eee; color: #555; border: 1px solid #ccc; padding: 8px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-login-admin:hover { background-color: #ddd; color: #333; }
+
+        /* ================= TELAS E NAVEGAÇÃO ================= */
+        .tela { display: none; }
+        .tela.ativa { display: block; }
+        .btn-voltar { color: #005f6b; text-decoration: underline; cursor: pointer; border: none; background: none; font-size: 15px; padding: 0; margin-bottom: 15px; text-align: left; display: block; }
+
+        /* ================= CALENDÁRIO ================= */
+        .instrucoes { font-size: 14px; margin-bottom: 20px; text-align: left; line-height: 1.5; }
+        .aviso { background-color: #f9f9f9; padding: 12px; border-radius: 4px; border: 1px solid #eee; border-left: 5px solid #d32f2f; margin-top: 15px; font-size: 13px; }
+        .nav-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .nav-mes button { padding: 5px 15px; font-size: 14px; cursor: pointer; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; }
+        .nav-mes h3 { color: #005f6b; font-size: 22px; margin: 0; text-transform: uppercase; font-weight: bold; }
+        .calendario-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: left; }
+        .dia-semana { font-size: 12px; border-bottom: 1px dotted #ccc; padding-bottom: 5px; color: #555; font-weight: bold; text-align: center; }
+        .dia-semana.dom { color: #d32f2f; }
+        .dia { background-color: #e9e9e9; height: 95px; display: flex; flex-direction: column; padding: 8px; cursor: pointer; border: 1px solid #ddd; transition: 0.2s; border-radius: 4px; }
+        .dia:hover { background-color: #d4d4d4; }
+        .dia.vazio { background-color: transparent; border: none; cursor: default; }
+        .dia-fds { background-color: #fce4e4; border-color: #f5c6c6; cursor: default; }
+        .dia-numero { font-size: 18px; font-weight: bold; width: 100%; text-align: left; }
+        .reserve-agora { font-size: 11px; color: #555; margin-top: auto; font-weight: bold; }
+        .prof-fixo { font-size: 10px; color: #004080; font-weight: bold; margin-top: 5px; text-align: left; line-height: 1.3; }
+        .texto-proerd { font-size: 10px; color: #d32f2f; font-weight: bold; margin-top: 5px; text-align: left; line-height: 1.3; }
+        .container-btn-horarios { text-align: center; margin-top: 30px; border-top: 1px dotted #ccc; padding-top: 25px; }
+        .btn-ver-horarios { background-color: #004080; color: white; border: none; padding: 15px 25px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.2s; width: 100%; max-width: 500px; }
+
+        /* ================= FORMULÁRIO ================= */
+        .destaque-data { background-color: #e0f7fa; color: #005f6b; padding: 15px; border-radius: 5px; font-size: 18px; text-align: center; border: 2px dashed #005f6b; margin-bottom: 20px; font-weight: bold; }
+        .secao-titulo { background-color: #005f6b; color: white; padding: 10px 20px; border-radius: 5px 5px 0 0; width: fit-content; font-weight: bold; margin-top: 20px; }
+        .caixa-branca { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; border-radius: 0 5px 5px 5px; background-color: #fafafa; }
+        .titulo-periodo { color: #005f6b; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 15px; margin-bottom: 15px; }
+        .dropdown-vespertino { border-top: 1px dashed #ccc; padding-top: 15px; margin-top: 15px; }
+        .dropdown-vespertino summary { color: #005f6b; font-size: 16px; font-weight: bold; cursor: pointer; padding: 5px 0; outline: none; list-style: none; }
+        .grid-horarios { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .horario-item { display: flex; align-items: center; font-size: 14px; color: #333; padding: 5px; }
+        .horario-item input { margin-right: 10px; width: 18px; height: 18px; cursor: pointer; }
+        .form-layout { display: flex; gap: 20px; text-align: left; }
+        .coluna-esq { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        .coluna-dir { flex: 2; display: flex; flex-direction: column; }
+        .form-group { display: flex; flex-direction: column; margin-bottom: 15px; }
+        .form-group label { font-size: 13px; margin-bottom: 5px; font-weight: bold; color: #555; }
+        .form-group input, .form-group textarea { padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+        .texto-vermelho { color: #d32f2f; font-weight: bold; font-size: 14px; margin-bottom: 8px; }
+        .rodape-form { text-align: center; margin-top: 25px; }
+        .btn-agendar { background-color: #004080; color: white; border: none; padding: 18px 40px; font-size: 20px; font-weight: bold; cursor: pointer; border-radius: 5px; width: 80%; max-width: 400px; }
+
+        /* Rodapé */
+        .rodape-site { margin-top: 40px; border-top: 1px solid #ddd; padding-top: 20px; font-size: 12px; color: #666; text-align: center; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="header-textos">
+            <h2>Escola Municipal Cívico-Militar Prof. José Geraldo Guimarães</h2>
+            <h1>Reserva Laboratório de Informática 02</h1>
+        </div>
+    </div>
+
+    <div id="tela-calendario" class="tela ativa">
+        <div class="instrucoes">
+            O laboratório 02 pode ser agendado em qualquer dia e horário letivo, mediante disponibilidade e obrigatoriedade da indicação da habilidade SEMED.
+            <div class="aviso">
+                <strong>⚠️ Atenção:</strong> Caso agende fora dos horários de suporte do professor Lian, o professor regente da turma ficará responsável por retirar a chave na coordenação pedagógica e operar os equipamentos.
+            </div>
+        </div>
+        <div class="nav-mes">
+            <button>&lt; FEV</button>
+            <h3 id="mes-ano-texto">MARÇO 2026</h3>
+            <button>ABR &gt;</button>
+        </div>
+        <div class="calendario-grid" id="grade-dias">
+            <div class="dia-semana">Seg</div><div class="dia-semana">Ter</div><div class="dia-semana">Qua</div>
+            <div class="dia-semana">Qui</div><div class="dia-semana">Sex</div><div class="dia-semana">Sab</div><div class="dia-semana dom">Dom</div>
+        </div>
+    </div>
+
+    <div id="tela-formulario" class="tela">
+        <button class="btn-voltar" onclick="mudarTela('tela-calendario')">&lt;&lt; Voltar para o calendário</button>
+        
+        <div class="destaque-data">
+            📅 Data selecionada: <span id="data-selecionada-texto"></span>
+        </div>
+
+        <div class="secao-titulo">Selecione os horários:</div>
+        <div class="caixa-branca">
+            <h4 class="titulo-periodo" style="margin-top:0;">☀️ Período Matutino</h4>
+            <div class="grid-horarios">
+                <label class="horario-item"><input type="checkbox" name="horario" value="1º Horário (07:00 - 07:50)"> 1º Horário (07:00 - 07:50)</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="4º Horário (09:45 - 10:35)"> 4º Horário (09:45 - 10:35)</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="2º Horário (07:50 - 08:40)"> 2º Horário (07:50 - 08:40)</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="5º Horário (10:35 - 11:25)"> 5º Horário (10:35 - 11:25)</label>
+                <label class="horario-item"><input type="checkbox" name="horario" value="3º Horário (08:40 - 09:30)"> 3º Horário (08:40 - 09:30)</label>
+            </div>
+
+            <details id="acordeon-vespertino" class="dropdown-vespertino">
+                <summary>🌤️ Período Vespertino <span style="font-size: 13px; font-weight: normal; color: #666;">(Clique para expandir)</span> ▼</summary>
+                <div class="grid-horarios" style="margin-bottom: 0;">
+                    <label class="horario-item"><input type="checkbox" name="horario" value="1º Hor. Vesp (13:00 - 13:50)"> 1º Horário (13:00 - 13:50)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="4º Hor. Vesp (15:45 - 16:35)"> 4º Horário (15:45 - 16:35)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="2º Hor. Vesp (13:50 - 14:40)"> 2º Horário (13:50 - 14:40)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="5º Hor. Vesp (16:35 - 17:25)"> 5º Horário (16:35 - 17:25)</label>
+                    <label class="horario-item"><input type="checkbox" name="horario" value="3º Hor. Vesp (14:40 - 15:30)"> 3º Horário (14:40 - 15:30)</label>
+                </div>
+            </details>
+        </div>
+
+        <div class="secao-titulo">Preencha os dados abaixo:</div>
+        <div class="caixa-branca">
+            <div class="form-layout">
+                <div class="coluna-esq">
+                    <div class="form-group"><label>Nome do Professor:</label><input type="text" id="nome"></div>
+                    <div class="form-group"><label>Telefone:</label><input type="text" id="telefone"></div>
+                    <div class="form-group"><label>E-mail:</label><input type="email" id="email"></div>
+                </div>
+                <div class="coluna-dir">
+                    <div class="texto-vermelho">
+                        Descreva o que será utilizado na aula <br>
+                        <span style="font-weight: normal; font-size: 13px; color: #555;">
+                            - Informe o link, jogos ou plataformas.<br>
+                            - Indique a Habilidade do Currículo SEMED.<br>
+                            <strong style="color: #d32f2f;">Lembre-se de registrar no Planejamento o uso do laboratório.</strong>
+                        </span>
+                    </div>
+                    <textarea id="descricao" rows="6"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="rodape-form">
+            <button class="btn-agendar" id="btn-salvar" onclick="salvarNoFirebase()">📅 AGENDAR AULA</button>
+        </div>
+    </div>
+
+    <div class="rodape-site">
+        Dúvidas e informações: <a href="mailto:Lian.ribeiro@edu.uberabadigital.br">Lian.ribeiro@edu.uberabadigital.br</a><br>
+        &copy; 2026 Professor Lian - Escola Municipal José Geraldo Guimarães.
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+<script>
+    // 1. INICIALIZANDO O FIREBASE COM SUAS CHAVES
+    const firebaseConfig = {
+        apiKey: "AIzaSyBsneCiBIWfZUk_xXrFafXu2kAQIc4JhD0",
+        authDomain: "laboratoriojgg.firebaseapp.com",
+        projectId: "laboratoriojgg",
+        storageBucket: "laboratoriojgg.firebasestorage.app",
+        messagingSenderId: "858172326287",
+        appId: "1:858172326287:web:7bab8c1b080ab27f134bfa"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // 2. NAVEGAÇÃO
+    function mudarTela(idTela) {
+        document.querySelectorAll('.tela').forEach(tela => tela.classList.remove('ativa'));
+        document.getElementById(idTela).classList.add('ativa');
+    }
+
+    // 3. CALENDÁRIO
+    let dataAtualSelecionada = "";
+    function gerarCalendario() {
+        const grid = document.getElementById("grade-dias");
+        while(grid.children.length > 7) { grid.removeChild(grid.lastChild); }
+        for (let i = 0; i < 6; i++) { grid.appendChild(Object.assign(document.createElement("div"), {className: "dia vazio"})); }
+
+        for (let dia = 1; dia <= 31; dia++) {
+            let divDia = document.createElement("div");
+            divDia.className = "dia";
+            divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div>`;
+            
+            let dataReal = new Date(2026, 2, dia); 
+            let diaSemana = dataReal.getDay(); 
+            
+            if (diaSemana === 0 || diaSemana === 6) { 
+                divDia.className = "dia dia-fds";
+            } else {
+                if (diaSemana === 1) divDia.innerHTML += `<div class="texto-proerd">PROERD<br>07:00 às 09:30</div>`;
+                else if (diaSemana === 3) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>07:00 às 11:25</div>`;
+                else if (diaSemana === 4) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>08:40 às 11:25</div>`;
+
+                divDia.innerHTML += `<div class="reserve-agora">Agendar Aula</div>`;
+                divDia.onclick = () => {
+                    dataAtualSelecionada = (dia < 10 ? "0"+dia : dia) + "/03/2026";
+                    document.getElementById("data-selecionada-texto").innerText = dataAtualSelecionada;
+                    mudarTela('tela-formulario');
+                };
+            }
+            grid.appendChild(divDia);
+        }
+    }
+
+    // 4. SALVAR DADOS NO BANCO DE DADOS (FIREBASE)
+    async function salvarNoFirebase() {
+        // Pegando o que o professor digitou
+        const nome = document.getElementById("nome").value;
+        const telefone = document.getElementById("telefone").value;
+        const email = document.getElementById("email").value;
+        const descricao = document.getElementById("descricao").value;
+
+        // Pegando os horários marcados
+        const checkboxes = document.querySelectorAll('input[name="horario"]:checked');
+        let horariosSelecionados = [];
+        checkboxes.forEach((cb) => { horariosSelecionados.push(cb.value); });
+
+        // Verificando se preencheu o básico
+        if(nome.trim() === "" || horariosSelecionados.length === 0) {
+            alert("⚠️ Por favor, preencha seu nome e selecione pelo menos um horário.");
+            return;
+        }
+
+        // Mudar o botão para "carregando"
+        const btn = document.getElementById("btn-salvar");
+        btn.innerHTML = "⏳ Salvando...";
+        btn.disabled = true;
+
+        try {
+            // Mandando para o Firebase!
+            await db.collection("agendamentos").add({
+                data: dataAtualSelecionada,
+                nomeProfessor: nome,
+                telefone: telefone,
+                email: email,
+                descricaoAula: descricao,
+                horarios: horariosSelecionados,
+                dataRegistro: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            alert("✅ Agendamento salvo com sucesso no sistema!");
+            
+            // Limpa o formulário para o próximo
+            document.getElementById("nome").value = "";
+            document.getElementById("telefone").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("descricao").value = "";
+            checkboxes.forEach(cb => cb.checked = false);
+
+            mudarTela('tela-calendario');
+        } catch (erro) {
+            console.error("Erro do Firebase: ", erro);
+            alert("❌ Erro ao salvar. Verifique sua conexão com a internet.");
+        } finally {
+            // Volta o botão ao normal
+            btn.innerHTML = "📅 AGENDAR AULA";
+            btn.disabled = false;
+        }
+    }
+
+    window.onload = gerarCalendario;
+</script>
+
+</body>
+</html>
