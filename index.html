@@ -24,9 +24,13 @@
         /* ================= CALENDÁRIO ================= */
         .instrucoes { font-size: 14px; margin-bottom: 20px; text-align: left; line-height: 1.5; }
         .aviso { background-color: #f9f9f9; padding: 12px; border-radius: 4px; border: 1px solid #eee; border-left: 5px solid #d32f2f; margin-top: 15px; font-size: 13px; }
-        .nav-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .nav-mes button { padding: 5px 15px; font-size: 14px; cursor: pointer; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; }
+        
+        /* Navegação dos Meses */
+        .nav-mes { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background-color: #f0f4f8; padding: 10px; border-radius: 5px; }
+        .nav-mes button { padding: 8px 20px; font-size: 14px; font-weight: bold; cursor: pointer; background-color: #005f6b; color: white; border: none; border-radius: 4px; transition: 0.2s; }
+        .nav-mes button:hover { background-color: #004080; }
         .nav-mes h3 { color: #005f6b; font-size: 22px; margin: 0; text-transform: uppercase; font-weight: bold; }
+        
         .calendario-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: left; }
         .dia-semana { font-size: 12px; border-bottom: 1px dotted #ccc; padding-bottom: 5px; color: #555; font-weight: bold; text-align: center; }
         .dia-semana.dom { color: #d32f2f; }
@@ -38,8 +42,10 @@
         .reserve-agora { font-size: 11px; color: #555; margin-top: auto; font-weight: bold; }
         .prof-fixo { font-size: 10px; color: #004080; font-weight: bold; margin-top: 5px; text-align: left; line-height: 1.3; }
         .texto-proerd { font-size: 10px; color: #d32f2f; font-weight: bold; margin-top: 5px; text-align: left; line-height: 1.3; }
+        
         .container-btn-horarios { text-align: center; margin-top: 30px; border-top: 1px dotted #ccc; padding-top: 25px; }
         .btn-ver-horarios { background-color: #004080; color: white; border: none; padding: 15px 25px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 5px; transition: 0.2s; width: 100%; max-width: 500px; }
+        .btn-ver-horarios:hover { background-color: #002b5e; }
 
         /* ================= FORMULÁRIO ================= */
         .destaque-data { background-color: #e0f7fa; color: #005f6b; padding: 15px; border-radius: 5px; font-size: 18px; text-align: center; border: 2px dashed #005f6b; margin-bottom: 20px; font-weight: bold; }
@@ -48,9 +54,16 @@
         .titulo-periodo { color: #005f6b; font-size: 16px; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 15px; margin-bottom: 15px; }
         .dropdown-vespertino { border-top: 1px dashed #ccc; padding-top: 15px; margin-top: 15px; }
         .dropdown-vespertino summary { color: #005f6b; font-size: 16px; font-weight: bold; cursor: pointer; padding: 5px 0; outline: none; list-style: none; }
+        
         .grid-horarios { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-        .horario-item { display: flex; align-items: center; font-size: 14px; color: #333; padding: 5px; }
+        .horario-item { display: flex; align-items: center; font-size: 14px; color: #333; padding: 5px; transition: 0.2s; }
         .horario-item input { margin-right: 10px; width: 18px; height: 18px; cursor: pointer; }
+        
+        /* Estilo para horários já agendados */
+        .horario-item.bloqueado { opacity: 0.5; text-decoration: line-through; cursor: not-allowed; }
+        .horario-item.bloqueado input { cursor: not-allowed; }
+        .horario-item.bloqueado::after { content: ' 🚫 Ocupado'; color: #d32f2f; font-size: 11px; margin-left: 5px; text-decoration: none; display: inline-block; font-weight: bold; }
+
         .form-layout { display: flex; gap: 20px; text-align: left; }
         .coluna-esq { flex: 1; display: flex; flex-direction: column; gap: 15px; }
         .coluna-dir { flex: 2; display: flex; flex-direction: column; }
@@ -60,6 +73,18 @@
         .texto-vermelho { color: #d32f2f; font-weight: bold; font-size: 14px; margin-bottom: 8px; }
         .rodape-form { text-align: center; margin-top: 25px; }
         .btn-agendar { background-color: #004080; color: white; border: none; padding: 18px 40px; font-size: 20px; font-weight: bold; cursor: pointer; border-radius: 5px; width: 80%; max-width: 400px; }
+        .btn-agendar:hover { background-color: #002b5e; }
+
+        /* ================= TABELAS (PÚBLICO E ADMIN) ================= */
+        .tabela-agendamentos { width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; margin-top: 10px; }
+        .tabela-agendamentos th { background-color: #17a2b8; color: white; padding: 10px; border: 1px solid #138496; }
+        .tabela-agendamentos td { border: 1px solid #ddd; padding: 12px; vertical-align: middle; }
+        .tabela-agendamentos tr:nth-child(even) { background-color: #f9f9f9; }
+
+        /* ================= PAINEL ADMIN ================= */
+        .badge-admin-aviso { background-color: #d32f2f; color: white; padding: 5px 15px; border-radius: 4px; font-size: 14px; font-weight: bold; display: inline-block; margin-bottom: 20px; }
+        .btn-excluir { background-color: #d32f2f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .btn-excluir:hover { background-color: #b71c1c; }
 
         /* Rodapé */
         .rodape-site { margin-top: 40px; border-top: 1px solid #ddd; padding-top: 20px; font-size: 12px; color: #666; text-align: center; }
@@ -73,6 +98,7 @@
             <h2>Escola Municipal Cívico-Militar Prof. José Geraldo Guimarães</h2>
             <h1>Reserva Laboratório de Informática 02</h1>
         </div>
+        <button class="btn-login-admin" onclick="solicitarSenhaAdmin()">⚙️ Admin</button>
     </div>
 
     <div id="tela-calendario" class="tela ativa">
@@ -82,14 +108,18 @@
                 <strong>⚠️ Atenção:</strong> Caso agende fora dos horários de suporte do professor Lian, o professor regente da turma ficará responsável por retirar a chave na coordenação pedagógica e operar os equipamentos.
             </div>
         </div>
+        
         <div class="nav-mes">
-            <button>&lt; FEV</button>
+            <button onclick="mudarMes(-1)">&lt; Mês Anterior</button>
             <h3 id="mes-ano-texto">MARÇO 2026</h3>
-            <button>ABR &gt;</button>
+            <button onclick="mudarMes(1)">Próximo Mês &gt;</button>
         </div>
+        
         <div class="calendario-grid" id="grade-dias">
-            <div class="dia-semana">Seg</div><div class="dia-semana">Ter</div><div class="dia-semana">Qua</div>
-            <div class="dia-semana">Qui</div><div class="dia-semana">Sex</div><div class="dia-semana">Sab</div><div class="dia-semana dom">Dom</div>
+            </div>
+
+        <div class="container-btn-horarios">
+            <button class="btn-ver-horarios" onclick="abrirListaPublica()">📅 Visualizar Horários Cadastrados</button>
         </div>
     </div>
 
@@ -149,6 +179,37 @@
         </div>
     </div>
 
+    <div id="tela-lista-publica" class="tela">
+        <button class="btn-voltar" onclick="mudarTela('tela-calendario')">&lt;&lt; Voltar para o calendário</button>
+        <h3>📅 Horários já cadastrados (Tempo Real)</h3>
+        <table class="tabela-agendamentos">
+            <thead>
+                <tr><th>Data</th><th>Horários Reservados</th><th>Professor e Descrição</th></tr>
+            </thead>
+            <tbody id="corpo-tabela-publica">
+                </tbody>
+        </table>
+    </div>
+
+    <div id="tela-admin" class="tela">
+        <button class="btn-voltar" onclick="mudarTela('tela-calendario')">&lt;&lt; Sair do Painel Admin e Voltar ao Site</button>
+        
+        <div class="badge-admin-aviso">🔐 MODO ADMINISTRADOR ATIVADO</div>
+        
+        <div class="caixa-branca">
+            <h3 style="margin-top:0; color:#004080;">Gerenciar Agendamentos</h3>
+            <p style="font-size: 13px; color: #666;">Aqui você pode visualizar e cancelar agendamentos. Ao cancelar, o horário volta a ficar disponível automaticamente.</p>
+            
+            <table class="tabela-agendamentos">
+                <thead style="background-color: #004080; color: white;">
+                    <tr><th>Data</th><th>Horários Reservados</th><th>Professor e Contato</th><th>Descrição / Motivo</th><th style="text-align: center;">Ações</th></tr>
+                </thead>
+                <tbody id="corpo-tabela-admin">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
     <div class="rodape-site">
         Dúvidas e informações: <a href="mailto:Lian.ribeiro@edu.uberabadigital.br">Lian.ribeiro@edu.uberabadigital.br</a><br>
         &copy; 2026 Professor Lian - Escola Municipal José Geraldo Guimarães.
@@ -171,71 +232,143 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // 2. NAVEGAÇÃO
+    // 2. NAVEGAÇÃO ENTRE TELAS
     function mudarTela(idTela) {
         document.querySelectorAll('.tela').forEach(tela => tela.classList.remove('ativa'));
         document.getElementById(idTela).classList.add('ativa');
     }
 
-    // 3. CALENDÁRIO
-    let dataAtualSelecionada = "";
-    function gerarCalendario() {
-        const grid = document.getElementById("grade-dias");
-        while(grid.children.length > 7) { grid.removeChild(grid.lastChild); }
-        for (let i = 0; i < 6; i++) { grid.appendChild(Object.assign(document.createElement("div"), {className: "dia vazio"})); }
+    // 3. LÓGICA DO ADMINISTRADOR
+    const SENHA_ADMIN = "Jgg2026@";
 
-        for (let dia = 1; dia <= 31; dia++) {
+    function solicitarSenhaAdmin() {
+        let senha = prompt("Acesso restrito. Digite a senha do Administrador:");
+        if (senha === SENHA_ADMIN) {
+            mudarTela('tela-admin');
+            carregarListas(); // Puxa os dados para a tabela do Admin
+        } else if (senha !== null) {
+            alert("❌ Senha incorreta!");
+        }
+    }
+
+    // 4. LÓGICA DO CALENDÁRIO DINÂMICO
+    const mesesNomes = ["JANEIRO", "FEVEREIRO", "MARÇO", "ABRIL", "MAIO", "JUNHO", "JULHO", "AGOSTO", "SETEMBRO", "OUTUBRO", "NOVEMBRO", "DEZEMBRO"];
+    let dataAtual = new Date();
+    let mesAtual = dataAtual.getMonth(); // Começa no mês atual do sistema
+    let anoAtual = dataAtual.getFullYear(); // Ano atual
+    let dataAtualSelecionada = "";
+
+    function mudarMes(delta) {
+        mesAtual += delta;
+        if (mesAtual > 11) { mesAtual = 0; anoAtual++; }
+        if (mesAtual < 0) { mesAtual = 11; anoAtual--; }
+        gerarCalendario();
+    }
+
+    function gerarCalendario() {
+        document.getElementById("mes-ano-texto").innerText = `${mesesNomes[mesAtual]} ${anoAtual}`;
+        const grid = document.getElementById("grade-dias");
+        
+        // Mantém apenas o cabeçalho dos dias da semana
+        grid.innerHTML = `
+            <div class="dia-semana">Seg</div><div class="dia-semana">Ter</div><div class="dia-semana">Qua</div>
+            <div class="dia-semana">Qui</div><div class="dia-semana">Sex</div><div class="dia-semana">Sab</div><div class="dia-semana dom">Dom</div>
+        `;
+
+        // Descobrir qual dia da semana o mês começa (0=Dom, 1=Seg...)
+        let primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
+        
+        // Ajuste porque nossa grade começa na Segunda-feira e o JavaScript no Domingo
+        let espacosVazios = primeiroDia === 0 ? 6 : primeiroDia - 1;
+        for (let i = 0; i < espacosVazios; i++) {
+            grid.innerHTML += `<div class="dia vazio"></div>`;
+        }
+
+        // Descobrir quantos dias tem o mês
+        let diasNoMes = new Date(anoAtual, mesAtual + 1, 0).getDate();
+
+        for (let dia = 1; dia <= diasNoMes; dia++) {
             let divDia = document.createElement("div");
             divDia.className = "dia";
             divDia.innerHTML = `<div class="dia-numero">${dia < 10 ? "0"+dia : dia}</div>`;
             
-            let dataReal = new Date(2026, 2, dia); 
+            let dataReal = new Date(anoAtual, mesAtual, dia); 
             let diaSemana = dataReal.getDay(); 
+            let dataFormatadaStr = `${dia < 10 ? '0'+dia : dia}/${mesAtual < 9 ? '0'+(mesAtual+1) : (mesAtual+1)}/${anoAtual}`;
             
             if (diaSemana === 0 || diaSemana === 6) { 
-                divDia.className = "dia dia-fds";
+                divDia.className += " dia-fds";
             } else {
+                // Inserções Fixas
                 if (diaSemana === 1) divDia.innerHTML += `<div class="texto-proerd">PROERD<br>07:00 às 09:30</div>`;
                 else if (diaSemana === 3) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>07:00 às 11:25</div>`;
                 else if (diaSemana === 4) divDia.innerHTML += `<div class="prof-fixo">Prof. Lian<br>08:40 às 11:25</div>`;
 
                 divDia.innerHTML += `<div class="reserve-agora">Agendar Aula</div>`;
+                
+                // Ao clicar num dia, prepara o formulário
                 divDia.onclick = () => {
-                    dataAtualSelecionada = (dia < 10 ? "0"+dia : dia) + "/03/2026";
-                    document.getElementById("data-selecionada-texto").innerText = dataAtualSelecionada;
-                    mudarTela('tela-formulario');
+                    abrirFormulario(dataFormatadaStr);
                 };
             }
             grid.appendChild(divDia);
         }
     }
 
-    // 4. SALVAR DADOS NO BANCO DE DADOS (FIREBASE)
+    // 5. ABRIR FORMULÁRIO E LER BLOQUEIOS DO FIREBASE
+    async function abrirFormulario(dataStr) {
+        dataAtualSelecionada = dataStr;
+        document.getElementById("data-selecionada-texto").innerText = dataAtualSelecionada;
+        mudarTela('tela-formulario');
+
+        // Limpa todas as caixinhas (Reseta)
+        document.querySelectorAll('.horario-item').forEach(lbl => {
+            lbl.classList.remove('bloqueado');
+            lbl.querySelector('input').disabled = false;
+            lbl.querySelector('input').checked = false;
+        });
+
+        try {
+            // Busca no Firebase se já tem agendamento para este dia específico
+            const snapshot = await db.collection("agendamentos").where("data", "==", dataStr).get();
+            
+            snapshot.forEach(doc => {
+                const agendamento = doc.data();
+                agendamento.horarios.forEach(horarioReservado => {
+                    // Se o horário estiver no Firebase, ele bloqueia a caixinha correspondente
+                    const checkboxOcupado = document.querySelector(`input[name="horario"][value="${horarioReservado}"]`);
+                    if(checkboxOcupado) {
+                        checkboxOcupado.disabled = true;
+                        checkboxOcupado.closest('.horario-item').classList.add('bloqueado');
+                    }
+                });
+            });
+        } catch(e) {
+            console.error("Erro ao ler bloqueios: ", e);
+        }
+    }
+
+    // 6. SALVAR NO FIREBASE
     async function salvarNoFirebase() {
-        // Pegando o que o professor digitou
         const nome = document.getElementById("nome").value;
         const telefone = document.getElementById("telefone").value;
         const email = document.getElementById("email").value;
         const descricao = document.getElementById("descricao").value;
 
-        // Pegando os horários marcados
         const checkboxes = document.querySelectorAll('input[name="horario"]:checked');
         let horariosSelecionados = [];
         checkboxes.forEach((cb) => { horariosSelecionados.push(cb.value); });
 
-        // Verificando se preencheu o básico
         if(nome.trim() === "" || horariosSelecionados.length === 0) {
-            alert("⚠️ Por favor, preencha seu nome e selecione pelo menos um horário.");
+            alert("⚠️ Por favor, preencha seu nome e selecione pelo menos um horário disponível.");
             return;
         }
 
-        // Mudar o botão para "carregando"
         const btn = document.getElementById("btn-salvar");
         btn.innerHTML = "⏳ Salvando...";
         btn.disabled = true;
 
         try {
-            // Mandando para o Firebase!
             await db.collection("agendamentos").add({
                 data: dataAtualSelecionada,
                 nomeProfessor: nome,
@@ -248,24 +381,93 @@
 
             alert("✅ Agendamento salvo com sucesso no sistema!");
             
-            // Limpa o formulário para o próximo
+            // Limpa form
             document.getElementById("nome").value = "";
             document.getElementById("telefone").value = "";
             document.getElementById("email").value = "";
             document.getElementById("descricao").value = "";
-            checkboxes.forEach(cb => cb.checked = false);
-
+            
             mudarTela('tela-calendario');
         } catch (erro) {
             console.error("Erro do Firebase: ", erro);
             alert("❌ Erro ao salvar. Verifique sua conexão com a internet.");
         } finally {
-            // Volta o botão ao normal
             btn.innerHTML = "📅 AGENDAR AULA";
             btn.disabled = false;
         }
     }
 
+    // 7. CARREGAR LISTAS (PÚBLICA E ADMIN) DO FIREBASE
+    function abrirListaPublica() {
+        mudarTela('tela-lista-publica');
+        carregarListas();
+    }
+
+    async function carregarListas() {
+        const tbPublica = document.getElementById("corpo-tabela-publica");
+        const tbAdmin = document.getElementById("corpo-tabela-admin");
+        
+        tbPublica.innerHTML = "<tr><td colspan='3'>⏳ Buscando agendamentos no sistema...</td></tr>";
+        tbAdmin.innerHTML = "<tr><td colspan='5'>⏳ Buscando agendamentos no sistema...</td></tr>";
+
+        try {
+            const snapshot = await db.collection("agendamentos").get();
+            tbPublica.innerHTML = "";
+            tbAdmin.innerHTML = "";
+
+            if (snapshot.empty) {
+                tbPublica.innerHTML = "<tr><td colspan='3'>Nenhum agendamento encontrado.</td></tr>";
+                tbAdmin.innerHTML = "<tr><td colspan='5'>Nenhum agendamento encontrado.</td></tr>";
+                return;
+            }
+
+            snapshot.forEach(doc => {
+                const id = doc.id;
+                const ag = doc.data();
+                let horariosStr = ag.horarios.join("<br>");
+
+                // Tabela Pública (sem informações sensíveis e botão de exclusão)
+                tbPublica.innerHTML += `
+                    <tr>
+                        <td><strong>${ag.data}</strong></td>
+                        <td>${horariosStr}</td>
+                        <td><strong>${ag.nomeProfessor}</strong><br>${ag.descricaoAula}</td>
+                    </tr>
+                `;
+
+                // Tabela do Administrador
+                tbAdmin.innerHTML += `
+                    <tr>
+                        <td><strong>${ag.data}</strong></td>
+                        <td>${horariosStr}</td>
+                        <td><strong>${ag.nomeProfessor}</strong><br><small>${ag.telefone} | ${ag.email}</small></td>
+                        <td>${ag.descricaoAula}</td>
+                        <td style="text-align: center;">
+                            <button class="btn-excluir" onclick="excluirReserva('${id}')">🗑️ Cancelar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        } catch(e) {
+            console.error(e);
+            tbPublica.innerHTML = "<tr><td colspan='3'>❌ Erro ao buscar os dados.</td></tr>";
+        }
+    }
+
+    // 8. FUNÇÃO PARA O ADMIN EXCLUIR RESERVA
+    async function excluirReserva(idRegistro) {
+        if(confirm("⚠️ Tem certeza que deseja cancelar esta reserva? O horário voltará a ficar livre para os professores na mesma hora.")) {
+            try {
+                await db.collection("agendamentos").doc(idRegistro).delete();
+                alert("✅ Reserva cancelada com sucesso!");
+                carregarListas(); // Recarrega a tabela para sumir a linha
+            } catch(e) {
+                alert("❌ Erro ao cancelar a reserva.");
+            }
+        }
+    }
+
+    // Inicia o sistema montando o calendário do mês atual
     window.onload = gerarCalendario;
 </script>
 
